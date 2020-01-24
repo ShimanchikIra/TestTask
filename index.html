@@ -3,9 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
 </head>
 <body>
-
+<div class="wrap">
+    <div class="search-by-state">
+        <div class="search-by-state__select-box">
+            <label for="selectId" class="search-by-state__label">Choose state</label><select id="selectId" class="search-by-state__select">
+        </select>
+        </div>
+            <button onclick="searchCityByState()" class="search-by-state__button">Show cities</button>
+    </div>
+</div>
 <script src="script.js"></script>
 </body>
 </html>

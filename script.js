@@ -1,10 +1,12 @@
-let inputData = '"Nashville, TN", 36.17, -86.78;' +
+const INPUTDATA = '"Nashville, TN", 36.17, -86.78;' +
     '"New York, NY", 40.71, -74.00;' +
-    '"Atlanta, NY", 33.75, -84.39;' +
+    '"Atlanta, GA", 33.75, -84.39;' +
     '"Denver, CO", 39.74, -104.98;' +
     '"Seattle, WA", 47.61, -122.33;' +
     '"Los Angeles, CA", 34.05, -118.24;' +
     '"Memphis, TN", 35.15, -90.05;';
+let cityMap = new CityMap(INPUTDATA);
+inputStatesInSelect();
 
 function City(cityName, cityState, CityLatitude, CityLongitude) {
     this.name=cityName;
@@ -82,7 +84,29 @@ function CityMap(listOfCities) {
             default: return null;
         }
     }
-
 }
 
-
+function inputStatesInSelect(){
+    let options = cityMap.getStateAbbreviations().split(' ');
+    let select = document.getElementById('selectId');
+    while (select.options.length > 0) {
+        select.options.remove(0);
+    }
+    options.forEach((nameState, i) => {
+        let option = document.createElement('option');
+        option.value = i.toString();
+        option.text = nameState;
+        select.options.add(option);
+    });
+}
+function searchCityByState() {
+    let cities = [];
+    let select = document.getElementById('selectId');
+    let selected = Array.from(select.options)
+        .filter(option => option.selected)
+        .map(option => option.text);
+    cityMap.cities.forEach(city => {
+        if (selected[0] === city.state) cities.push(city.name);
+    });
+    alert(cities);
+}
