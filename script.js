@@ -6,11 +6,11 @@ let inputData = '"Nashville, TN", 36.17, -86.78;' +
     '"Los Angeles, CA", 34.05, -118.24;' +
     '"Memphis, TN", 35.15, -90.05;';
 
-function City(cityName, cityState, CityLatitudes, CityLongitudes) {
+function City(cityName, cityState, CityLatitude, CityLongitude) {
     this.name=cityName;
     this.state=cityState;
-    this.latitudes=CityLatitudes;
-    this.longitudes=CityLongitudes;
+    this.latitude=CityLatitude;
+    this.longitude=CityLongitude;
 }
 
 function CityMap(listOfCities) {
@@ -31,5 +31,23 @@ function CityMap(listOfCities) {
         });
         return result.join(' ');
     };
+
+    this.getClosestCityName = function(latitude, longitude) {
+        let distances = [];
+        let closestCity = '';
+        this.cities.forEach(city => {
+            let distance = getDistance(latitude, longitude, city.latitude, city.longitude);
+            distances.push(distance);
+            if (distance <= Math.min(...distances)) closestCity = city.name;
+        });
+        return closestCity;
+    };
+
+    function getDistance(latitude1, longitude1, latitude2, longitude2,) {
+        let a = Math.abs(latitude1 - latitude2);
+        let b = Math.abs(longitude1 - longitude2);
+        return Math.sqrt(Math.pow(a,2) + Math.pow(b,2) );
+    }
+
 }
 
