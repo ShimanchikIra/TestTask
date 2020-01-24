@@ -22,6 +22,7 @@ function CityMap(listOfCities) {
         });
         this.cities.push(new City(...cityFields));
     });
+
     this.getStateAbbreviations = function () {
         let result = [];
         this.cities.forEach(city => {
@@ -49,5 +50,39 @@ function CityMap(listOfCities) {
         return Math.sqrt(Math.pow(a,2) + Math.pow(b,2) );
     }
 
+    this.getRequestedCity = function(parameter) {
+        let result = [];
+
+        switch(parameter) {
+            case "northernmost":
+                result = this.cities.sort((a, b) => {
+                    return a.latitude-b.latitude;
+                });
+
+                return result[result.length-1].name;
+
+            case "southernmost":
+                result = this.cities.sort((a, b) => {
+                    return a.latitude-b.latitude;
+                });
+                return result[0].name;
+            case "easternmost":
+                result = this.cities.sort((a, b) => {
+                    return a.longitude-b.longitude;
+                });
+
+                return result[result.length-1].name;
+
+            case "westernmost":
+                result = this.cities.sort((a, b) => {
+                    return a.longitude-b.longitude;
+                });
+                return result[0].name;
+
+            default: return null;
+        }
+    }
+
 }
+
 
