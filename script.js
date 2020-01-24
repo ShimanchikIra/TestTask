@@ -83,7 +83,11 @@ function CityMap(listOfCities) {
 
             default: return null;
         }
-    }
+    };
+
+    this.addCity = function (city) {
+        this.cities.push(city);
+    };
 }
 
 function inputStatesInSelect(){
@@ -99,6 +103,7 @@ function inputStatesInSelect(){
         select.options.add(option);
     });
 }
+
 function searchCityByState() {
     let cities = [];
     let select = document.getElementById('selectId');
@@ -110,3 +115,13 @@ function searchCityByState() {
     });
     alert(cities);
 }
+
+function addNewCity() {
+    let name = document.getElementById('nameNewCity').value;
+    let state = document.getElementById('stateNewCity').value;
+    let latitude = document.getElementById('latitudeNewCity').value;
+    let longitude = document.getElementById('longitudeNewCity').value;
+    cityMap.addCity(new City(name,state, latitude, longitude));
+    inputStatesInSelect();
+}
+
