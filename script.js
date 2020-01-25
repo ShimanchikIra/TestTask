@@ -5,8 +5,11 @@ const INPUTDATA = '"Nashville, TN", 36.17, -86.78;' +
     '"Seattle, WA", 47.61, -122.33;' +
     '"Los Angeles, CA", 34.05, -118.24;' +
     '"Memphis, TN", 35.15, -90.05;';
+
 let cityMap = new CityMap(INPUTDATA);
 inputStatesInSelect();
+pullCitiesFromLS();
+console.log(cityMap.cities);
 
 function City(cityName, cityState, CityLatitude, CityLongitude) {
     this.name=cityName;
@@ -17,7 +20,7 @@ function City(cityName, cityState, CityLatitude, CityLongitude) {
 
 function CityMap(listOfCities) {
     this.cities = [];
-    listOfCities.substring(0, listOfCities.length - 1).split(';').forEach(line => {
+    listOfCities.substring(0, listOfCities.length - 1).split(';').forEach((line) => {
         let cityFields = [];
         line.split(',').forEach(item => {
             cityFields.push(item.trim().replace(/["']/g,''));
@@ -121,7 +124,18 @@ function addNewCity() {
     let state = document.getElementById('stateNewCity').value;
     let latitude = document.getElementById('latitudeNewCity').value;
     let longitude = document.getElementById('longitudeNewCity').value;
-    cityMap.addCity(new City(name,state, latitude, longitude));
+    let newCity = new City(name,state, latitude, longitude);
+    cityMap.addCity(newCity);
+    localStorage.setItem('key '+ (cityMap.cities.length-1), JSON.stringify(newCity));
     inputStatesInSelect();
 }
 
+function pullCitiesFromLS() {
+    if (localStorage.length > 0) {
+        let keys = Object.keys(localStorage);
+        for(let key of keys) {
+            console.log(key);
+            cityMap.cities.push(JSON.parse(localStorage.getItem(key)));
+        }
+    }
+}
